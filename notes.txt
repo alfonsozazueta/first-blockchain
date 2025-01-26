@@ -1,0 +1,98 @@
+Code Structure
+Part 1: Building the Blockchain
+The Blockchain class includes the following:
+
+  __init__: Initializes the blockchain with the genesis block and an empty list of transactions.
+  create_block(proof, previous_hash): Creates a new block and adds it to the chain.
+  get_previous_block(): Retrieves the last block of the chain.
+  proof_of_work(previous_proof): Implements mining logic using proof of work (PoW).
+  hash(block): Generates the hash of a given block.
+  is_chain_valid(chain): Validates the blockchain by ensuring continuity and correctness of proofs.
+  add_transaction(sender, receiver, amount): Adds a new transaction to the list of pending transactions.
+  add_node(address): Registers a new node in the network.
+  replace_chain(): Ensures the local chain is replaced with the longest valid chain in the network.
+
+Part 2: Mining the Blockchain
+A Flask web application provides HTTP endpoints for interaction with the blockchain.
+
+API Endpoints
+Mine a Block
+
+  URL: /mine_block
+  Method: GET
+  Description: Mines a new block by solving the proof of work and adds it to the chain.
+  Response
+{
+  "message": "Congratulations, you just mined a block!",
+  "index": 2,
+  "timestamp": "2025-01-26 15:00:00",
+  "proof": 12345,
+  "previous_hash": "0000...",
+  "transactions": [...]
+}
+Get Full Blockchain
+
+URL: /get_chain
+  Method: GET
+  Description: Fetches the entire blockchain.
+  Response:
+ {
+  "chain": [...],
+  "length": 2
+}
+
+Check Blockchain Validity
+
+URL: /is_valid
+Method: GET
+Description: Verifies whether the blockchain is valid.
+Response:
+
+{
+  "message": "Blockchain is valid"
+}
+
+Add a Transaction
+
+URL: /add_transaction
+Method: POST
+Payload:
+
+{
+  "sender": "Alice",
+  "receiver": "Bob",
+  "amount": 50
+}
+
+Response:
+
+{
+  "message": "This transaction will be added to block 2"
+}
+Connect New Nodes
+
+URL: /connect_node
+Method: POST
+Payload:
+
+{
+  "nodes": ["http://127.0.0.1:5000", "http://127.0.0.1:5001"]
+}
+Response:
+
+{
+  "message": "All the nodes are now connected. The ponchcoin contains all of the nodes",
+  "total_nodes": [...]
+}
+Replace Chain
+
+URL: /replace_chain
+Method: GET
+Description: Replaces the current chain with the longest chain if discrepancies are found.
+Response:
+
+{
+  "message": "The nodes had different chains so the chain was replaced by the longest",
+  "new_chain": [...]
+}
+
